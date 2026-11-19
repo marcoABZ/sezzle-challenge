@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: backend/go.mod
+      - uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.12
+          install-only: true
+      - name: Lint
+        run: cd backend && golangci-lint run ./...
+      - name: Test
+        run: cd backend && go test ./..
+      - name: Coverage
+        run: cd backend && go test -coverprofile=coverage.out ./internal/... && go tool cover -func=coverage.out && go tool cover -html=coverage.out -o coverage.html
+
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: backend-coverage
+          path: |
+            backend/coverage.out
+            backend/coverage.html
+  
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install
+        run: npm ci
+        working-directory: frontend
+      - name: Lint
+        run: cd frontend && npm run lint && npm run typecheck
+      - name: Test
+        run: cd frontend && npm test
+      - name: Coverage
+        run: cd frontend && npm run coverage
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: frontend-coverage
+          path: frontend/coverage

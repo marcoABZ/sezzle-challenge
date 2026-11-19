@@ -1,0 +1,24 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - depguard
+  settings:
+    depguard:
+      rules:
+        calculator-has-only-domain-logic:
+          files:
+            - "**/internal/calculator/**"
+          deny:
+            - pkg: net/http
+              desc: HTTP belongs in internal/httpapi
+            - pkg: enconding/json
+              desc: Arguments parsing and response encoding belongs in internal/httpapi
+            - pck: github.com/marcoABZ/calculator/backend/internal/httpapi
+              desc: Dependency flows inwards. Domain must not depend on transport layer
+
+formatters:
+  enable:
+    - gofmt
+    - goimports

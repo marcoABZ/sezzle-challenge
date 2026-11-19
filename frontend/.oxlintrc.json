@@ -3,6 +3,32 @@
   "plugins": ["react", "typescript", "oxc"],
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "no-restricted-globals": [
+      "error",
+      { "name": "fetch", "message": "Only src/api may call fetch" }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/api/**"],
+      "rules": { "no-restricted-globals": "off" }
+    },
+    {
+      "files": ["src/components/**", "src/App.tsx"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/api", "**/api/*"],
+                "message": "Components must only reach Backend through custom hook, not through direct access"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
