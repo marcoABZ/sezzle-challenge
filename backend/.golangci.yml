@@ -13,9 +13,9 @@ linters:
           deny:
             - pkg: net/http
               desc: HTTP belongs in internal/httpapi
-            - pkg: enconding/json
+            - pkg: encoding/json
               desc: Arguments parsing and response encoding belongs in internal/httpapi
-            - pck: github.com/marcoABZ/calculator/backend/internal/httpapi
+            - pkg: github.com/marcoABZ/calculator/backend/internal/httpapi
               desc: Dependency flows inwards. Domain must not depend on transport layer
 
 formatters:
