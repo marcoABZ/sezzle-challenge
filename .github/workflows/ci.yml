@@ -23,7 +23,7 @@ jobs:
       - name: Lint
         run: cd backend && golangci-lint run ./...
       - name: Test
-        run: cd backend && go test ./..
+        run: cd backend && go test ./...
       - name: Coverage
         run: cd backend && go test -coverprofile=coverage.out ./internal/... && go tool cover -func=coverage.out && go tool cover -html=coverage.out -o coverage.html
 
