@@ -1,0 +1,6 @@
+backend/coverage.out
+backend/bin/
+frontend/coverage/
+.DS_Store
+.idea/
+.vscode/
