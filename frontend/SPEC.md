@@ -4,9 +4,8 @@ A keypad calculator in React, TypeScript and Vite. It follows the
 contract in [`docs/api.md`](../docs/api.md).
 
 Here we specify behaviour: what the calculator does. Screen design and
-accessibility have their own sections at the end and will be written
-later. The test cases come from this file and from the contract, and
-live in `TEST_CASES.md`.
+accessibility have their own sections at the end. The test cases come
+from this file and from the contract, and live in `TEST_CASES.md`.
 
 ## Principle
 
@@ -198,8 +197,83 @@ the browser, and any arithmetic in the browser.
 
 ## Screen
 
-To be specified.
+The calculator is one screen: a display above a keypad.
+
+### Keypad
+
+1. 23 keys in four columns and six rows, in this order:
+
+   ```
+   Clear  (      )      Backspace
+   √      xʸ     %      ÷
+   7      8      9      ×
+   4      5      6      −
+   1      2      3      +
+   0 (two columns)  .   =
+   ```
+
+2. Each key presses the `Key` of the same name. The power key's face reads
+   xʸ, but it types `^` like any other way of pressing `power`.
+
+### Display
+
+1. With an empty expression it shows `0`.
+2. While typing, it shows the expression in its shown form.
+3. After a result, it shows the expression that was sent, with the result
+   below it.
+4. After an error, it shows the kept expression, with the error text below
+   it.
+5. A line longer than the display scrolls so that its end stays in view.
+6. The display shows the state's text character for character. Styling may
+   raise or widen a character (the `^`, a leading `-`) but never replace it.
+
+### Sizes
+
+1. Narrower than 640px, or shorter than 521px: the calculator fills the
+   screen, like a phone's calculator app. A phone on its side (landscape, at
+   most 520px tall) puts the display on the left and the keypad on the right.
+2. Anything larger: the calculator is one object, about 384px wide, centred
+   in the window.
+
+### Keyboard
+
+1. These physical keys press calculator keys:
+   - `0` to `9`: the digit.
+   - `.` and `,`: `decimal`.
+   - `+`, `-`, `*` (also `x` and `X`), `/`, `^` and `%`: `add`,
+     `subtract`, `multiply`, `divide`, `power` and `percentage`.
+   - `r` and `R`: `sqrt`.
+   - `(` and `)`: `open_paren` and `close_paren`.
+   - `Enter` and `=`: `equals`.
+   - `Backspace`: `backspace`.
+   - `Escape` and `Delete`: `clear`.
+2. A press with Ctrl, Cmd or Alt held belongs to the browser and presses
+   nothing.
+3. Any other key does nothing.
+4. `Enter` always means `equals`, even when a key button has focus.
+5. `Space` presses the focused key button, as browsers do.
+6. A physical key press briefly lights its key on the keypad.
+7. A screen at least 1024px wide, used with a mouse or trackpad, shows a
+   legend of these keys next to the calculator.
 
 ## Accessibility
 
-To be specified.
+The target is WCAG 2.2 AA.
+
+1. The page has one level-1 heading, "Calculator".
+2. The keypad is a group named "Keypad", and every key is a button.
+   - Digit buttons are named by their digit.
+   - The other buttons are named Clear, Open parenthesis, Close
+     parenthesis, Backspace, Square root, Power, Percent, Divide, Multiply,
+     Minus, Plus, Decimal point and Equals.
+3. The display is a region named "Display". It is `aria-busy` while a
+   request is pending.
+4. A polite status announces `Equals <result>` after a result, and the error
+   text after an error. It stays empty while typing, so key presses are not
+   read out twice.
+5. Focus moves through the keys in keypad order, and the focused key shows a
+   visible ring. A key lit by a physical key press gets no ring, so a press
+   and focus never look alike.
+6. Text meets AA contrast: 4.5:1, or 3:1 for large text.
+7. With reduced motion, nothing turns or animates.
+8. In forced-colours mode every key keeps a visible border.
