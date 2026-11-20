@@ -15,4 +15,9 @@ export default defineConfig({
       thresholds: { lines: 90, functions: 90, branches: 90, statements: 90 },
     },
   },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080',
+    },
+  },
 })
