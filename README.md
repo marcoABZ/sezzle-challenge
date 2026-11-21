@@ -6,7 +6,7 @@ that evaluates expressions and a React keypad that edits them.
 ## Run it
 
 The app is deployed on a DigitalOcean Droplet and available at
-[sazzle.codebymarco.dev](https://sazzle.codebymarco.dev/). Its DNS
+[sezzle.codebymarco.dev](https://sezzle.codebymarco.dev/). Its DNS
 records are managed on Cloudflare.
 
 To run it locally, Docker is the only requirement.
