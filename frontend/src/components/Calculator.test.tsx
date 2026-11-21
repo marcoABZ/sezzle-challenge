@@ -182,10 +182,10 @@ describe('The display', () => {
   // Rule: the next key after an error removes the error from the screen.
   it.each<Row>([
     [
-      'click 1 Divide 0 Equals; fake rejects division_by_zero; click 2 | display shows "1÷02" and no error text; status empty',
+      'click 1 Divide 0 Equals; fake rejects division_by_zero; click 2 | display shows "1÷2" and no error text; status empty',
       [{ click: ['1', 'Divide', '0', 'Equals'] }, { click: ['2'] }],
       [{ rejects: 'division_by_zero' }],
-      { shows: ['1÷02'], absent: ['Cannot divide by zero'], status: '' },
+      { shows: ['1÷2'], absent: ['Cannot divide by zero'], status: '' },
     ],
   ])('%s', check)
 

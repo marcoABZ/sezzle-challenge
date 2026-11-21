@@ -333,7 +333,7 @@ Rule: after an error, the display shows the kept expression and the error text, 
 
 Rule: the next key after an error removes the error from the screen.
 
-- click 1 Divide 0 Equals; fake rejects division_by_zero; click 2 | display shows "1÷02" and no error text; status empty  # error text left on screen after the state cleared it
+- click 1 Divide 0 Equals; fake rejects division_by_zero; click 2 | display shows "1÷2" and no error text; status empty  # error text left on screen after the state cleared it
 
 Rule: while a request is pending, the display is busy.
 
